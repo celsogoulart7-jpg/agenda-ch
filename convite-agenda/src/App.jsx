@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 
 function formatForGoogleCalendar(event) {
   const pad = (n) => String(n).padStart(2, "0");
+  const makeLocalDate = (year, month, day) => new Date(Number(year), Number(month) - 1, Number(day));
   const parseDate = (dateStr, timeStr) => {
     if (!dateStr) return null;
     const cleanDate = dateStr.replace(/[^\d\/\-\.]/g, "");
@@ -9,25 +10,23 @@ function formatForGoogleCalendar(event) {
     let d;
     const dmyMatch = cleanDate.match(/^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/);
     const ymdMatch = cleanDate.match(/^(\d{4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})$/);
-    if (dmyMatch) d = new Date(`${dmyMatch[3]}-${pad(dmyMatch[2])}-${pad(dmyMatch[1])}`);
-    else if (ymdMatch) d = new Date(`${ymdMatch[1]}-${pad(ymdMatch[2])}-${pad(ymdMatch[3])}`);
+    if (dmyMatch) d = makeLocalDate(dmyMatch[3], dmyMatch[2], dmyMatch[1]);
+    else if (ymdMatch) d = makeLocalDate(ymdMatch[1], ymdMatch[2], ymdMatch[3]);
     else d = new Date(dateStr);
     if (isNaN(d)) return null;
     const [hh, mm] = cleanTime.split(":").map(Number);
     d.setHours(hh || 0, mm || 0, 0);
-    return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+    return d;
   };
+  const formatDateTime = (d) => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
   const start = parseDate(event.date, event.startTime);
   const end = parseDate(event.endDate || event.date, event.endTime || event.startTime);
   const params = new URLSearchParams();
   params.set("action", "TEMPLATE");
   params.set("text", event.title || "Evento");
   if (start) {
-    const endStr = end && end !== start ? end : (() => {
-      const h = parseInt(start.slice(9, 11));
-      return start.slice(0, 9) + String(h + 1).padStart(2, "0") + start.slice(11);
-    })();
-    params.set("dates", `${start}/${endStr}`);
+    const endDate = end && end.getTime() !== start.getTime() ? end : new Date(start.getTime() + 60 * 60 * 1000);
+    params.set("dates", `${formatDateTime(start)}/${formatDateTime(endDate)}`);
   }
   if (event.location) params.set("location", event.location);
   const details = [
