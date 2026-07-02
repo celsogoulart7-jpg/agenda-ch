@@ -6,16 +6,15 @@ function formatForGoogleCalendar(event) {
     if (!dateStr) return null;
     const cleanDate = dateStr.replace(/[^\d\/\-\.]/g, "");
     const cleanTime = timeStr ? timeStr.replace(/[^\d:]/g, "") : "00:00";
-    let d;
+    let day, month, year;
     const dmyMatch = cleanDate.match(/^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/);
     const ymdMatch = cleanDate.match(/^(\d{4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})$/);
-    if (dmyMatch) d = new Date(`${dmyMatch[3]}-${pad(dmyMatch[2])}-${pad(dmyMatch[1])}`);
-    else if (ymdMatch) d = new Date(`${ymdMatch[1]}-${pad(ymdMatch[2])}-${pad(ymdMatch[3])}`);
-    else d = new Date(dateStr);
-    if (isNaN(d)) return null;
+    if (dmyMatch) { day = +dmyMatch[1]; month = +dmyMatch[2]; year = +dmyMatch[3]; }
+    else if (ymdMatch) { year = +ymdMatch[1]; month = +ymdMatch[2]; day = +ymdMatch[3]; }
+    else return null;
     const [hh, mm] = cleanTime.split(":").map(Number);
-    d.setHours(hh || 0, mm || 0, 0);
-    return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+    // Build directly from parts — avoids UTC timezone shift
+    return `${year}${pad(month)}${pad(day)}T${pad(hh || 0)}${pad(mm || 0)}00`;
   };
   const start = parseDate(event.date, event.startTime);
   const end = parseDate(event.endDate || event.date, event.endTime || event.startTime);
