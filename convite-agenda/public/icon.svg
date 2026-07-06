@@ -1,10 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="120" fill="#6366F1"/>
-  <rect x="96" y="128" width="320" height="300" rx="32" fill="white" fill-opacity="0.15" stroke="white" stroke-width="16"/>
-  <path d="M96 208h320" stroke="white" stroke-width="16"/>
-  <path d="M176 88v80M336 88v80" stroke="white" stroke-width="20" stroke-linecap="round"/>
-  <rect x="144" y="256" width="72" height="60" rx="10" fill="white" fill-opacity="0.9"/>
-  <rect x="256" y="256" width="72" height="60" rx="10" fill="white" fill-opacity="0.6"/>
-  <rect x="144" y="336" width="72" height="52" rx="10" fill="white" fill-opacity="0.6"/>
-  <rect x="256" y="336" width="72" height="52" rx="10" fill="white" fill-opacity="0.3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Convite para agenda">
+  <defs>
+    <filter id="shadow" x="40" y="52" width="432" height="420" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#064e3b" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" fill="#0f766e"/>
+  <circle cx="424" cy="96" r="82" fill="#f97316" opacity="0.92"/>
+  <circle cx="96" cy="432" r="96" fill="#14b8a6" opacity="0.75"/>
+
+  <g filter="url(#shadow)">
+    <rect x="92" y="110" width="328" height="316" rx="44" fill="#fffaf0"/>
+    <path d="M92 184h328v-30c0-24.3-19.7-44-44-44H136c-24.3 0-44 19.7-44 44v30Z" fill="#ef4444"/>
+    <path d="M166 82v70M346 82v70" fill="none" stroke="#fffaf0" stroke-width="30" stroke-linecap="round"/>
+
+    <rect x="138" y="230" width="236" height="46" rx="18" fill="#ccfbf1"/>
+    <rect x="138" y="300" width="154" height="46" rx="18" fill="#ccfbf1"/>
+    <path d="M168 253h174M168 323h92" fill="none" stroke="#0f766e" stroke-width="18" stroke-linecap="round"/>
+
+    <circle cx="348" cy="340" r="54" fill="#f97316"/>
+    <path d="m322 340 18 18 38-42" fill="none" stroke="#fffaf0" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
 </svg>
