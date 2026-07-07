@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { logoBase64 } from "./logoBase64.js";
 
 function formatForGoogleCalendar(event) {
   const pad = (n) => String(n).padStart(2, "0");
@@ -12,6 +13,8 @@ function formatForGoogleCalendar(event) {
     if (dmyMatch) { day = +dmyMatch[1]; month = +dmyMatch[2]; year = +dmyMatch[3]; }
     else if (ymdMatch) { year = +ymdMatch[1]; month = +ymdMatch[2]; day = +ymdMatch[3]; }
     else return null;
+    // Se o ano não foi identificado (ex: data sem ano), usa o ano atual
+    if (!year || year < 2000) year = new Date().getFullYear();
     const [hh, mm] = cleanTime.split(":").map(Number);
     // Build directly from parts — avoids UTC timezone shift
     return `${year}${pad(month)}${pad(day)}T${pad(hh || 0)}${pad(mm || 0)}00`;
@@ -140,7 +143,7 @@ export default function App() {
 
         {/* Logo header */}
         <div style={S.logoHeader}>
-          <img src="/logo.png" alt="Carlos Humberto - Deputado Estadual" style={S.logo} />
+          <img src={logoBase64} alt="Carlos Humberto - Deputado Estadual" style={S.logo} />
         </div>
         <div style={S.divider} />
         <p style={S.subtitle2}>Cole o texto ou envie um arquivo — adicione direto ao Google Calendar</p>
