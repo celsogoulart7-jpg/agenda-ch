@@ -1,11 +1,11 @@
 {
-  "name": "Convite → Agenda",
-  "short_name": "Convite→Agenda",
+  "name": "Convite \u2192 Agenda | Carlos Humberto",
+  "short_name": "Agenda CH",
   "description": "Cole ou envie um convite e adicione ao Google Calendar",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#EEF2FF",
-  "theme_color": "#6366F1",
+  "background_color": "#3B5FC0",
+  "theme_color": "#3B5FC0",
   "orientation": "portrait-primary",
   "icons": [
     {
