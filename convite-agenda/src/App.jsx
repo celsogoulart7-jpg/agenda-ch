@@ -76,10 +76,11 @@ export default function App() {
   const handleDrop = (e) => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f); };
 
   const buildMessages = async () => {
+    const anoAtual = new Date().getFullYear();
     const prompt = `Extraia os dados do seguinte convite de evento e retorne APENAS um objeto JSON válido (sem markdown, sem explicações) com os campos:
 - title (string): nome/título do evento
-- date (string): data no formato DD/MM/AAAA
-- endDate (string ou null): data de término se diferente, DD/MM/AAAA
+- date (string): data no formato DD/MM/AAAA. IMPORTANTE: se o convite não mencionar o ano, use obrigatoriamente ${anoAtual} como ano.
+- endDate (string ou null): data de término se diferente, DD/MM/AAAA. Se sem ano, usar ${anoAtual}.
 - startTime (string ou null): horário de início, HH:MM
 - endTime (string ou null): horário de término, HH:MM
 - location (string ou null): local, endereço ou link de reunião online
